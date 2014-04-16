@@ -37,6 +37,18 @@
 							</div>
 
 							<div class="form-group">
+								<label for="full_name" class="col-sm-2 control-label">Full Name</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="full_name" name="full_name" placeholder="Full Name"{{ (Input::old('full_name')) ? ' value="' . e(Input::old('full_name')) . '"' : '' }}>
+								</div>
+								<label for="full_name" class="control-label">
+									@if($errors->has('username'))
+										{{ $errors->first('full_name') }}
+									@endif
+								</label>
+							</div>
+
+							<div class="form-group">
 								<label for="password" class="col-sm-2 control-label">Password</label>
 								<div class="col-sm-5">
 									<input type="password" class="form-control" id="password" name="password" placeholder="Password"{{ (Input::old('password')) ? ' value="' . e(Input::old('password')) . '"' : '' }}>

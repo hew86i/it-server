@@ -62,6 +62,7 @@ class AccountController extends BaseController {
 			array(
 				'email' 			=> 'required|max:50|email|unique:users',
 				'username' 			=> 'required|max:20|min:5|unique:users',
+				'full_name' 		=> 'required|max:20|min:5|unique:users',
 				'password' 			=> 'required|min:6',
 				'password_again'	=> 'required|same:password'
 			)
@@ -78,6 +79,7 @@ class AccountController extends BaseController {
 			$email = Input::get('email');
 			$username = Input::get('username');
 			$password = Input::get('password');
+			$full_name = Input::get('full_name');
 
 			// Activation code
 			$code = str_random(60);
@@ -85,6 +87,7 @@ class AccountController extends BaseController {
 			$user = User::create(array(
 				'email' => $email,
 				'username' => $username,
+				'full_name' => $full_name,
 				'password' => Hash::make($password),
 				'code' => $code,
 				'active' => 0

@@ -7,11 +7,11 @@
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
 	{{ HTML::style('css/style.css')}}
 	<style>
-		@import url(//fonts.googleapis.com/css?family=Lato:700);
+		/*@import url(//fonts.googleapis.com/css?family=Lato:700);*/
 		body {
 			margin-top: 60px;
-			font-family:'Lato', sans-serif;			
-			color: #999;
+			/*font-family:'Lato', sans-serif;			*/
+			/*color: #999;*/
 		}
 	</style>
 
@@ -24,6 +24,7 @@
 
 		@include('layout.navigation')
 		@yield('content')
+		@yield('listing')
 	</div>
 
 	<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>

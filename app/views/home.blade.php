@@ -7,6 +7,7 @@
 		<div class="row">
 		<div class="col-md-12" id="test1" style="background-color:#B2FFFF">		
 
+
 				<form class="form-horizontal" action="" method="post" style="width:70%">
 					  <fieldset>
 					    
@@ -54,7 +55,47 @@
 
 	</div> <!-- row za vnesi forma -->
 
+	@section('listing')		
 
+		<div class="row well" style="margin-top 10px">
+			<h2> Внесени налози</h2>
+		</div>
+		<style type="text/css">
+			ul,ol {
+				margin-left: 10px;
+				}
+		</style>
+
+		<?php
+
+			$allViews = Oglasna::GetActive()
+								->orderby('created_at')
+								->paginate(10);			
+			
+			
+			foreach ($allViews as $view) { ?>
+				<div class="row well row-aktivnosti" style="border: 1px solid black" id='row_<?php echo $view->id ?>' >
+					<div class="col-sm-3">
+								<h4><?php echo $view->user ?></h4>
+								<h4><?php echo $view->created_at ?></h4>								
+					</div> 
+				
+					<div class="col-sm-6" style="border-left:1px solid black">
+						<h2><?php echo $view->name ?></h2>							
+						<p><?php echo $view->description ?><p>					
+					</div>
+					
+
+				</div>
+
+				
+			<?php } 
+
+			 // pagination links
+			echo '<div style="text-align:center">'.$allViews->links().'</div>';
+		 ?>
+
+	@stop
 
 
 
@@ -62,3 +103,4 @@
 		<h3>You are not signed in.</h3>
 	@endif
 @stop
+
