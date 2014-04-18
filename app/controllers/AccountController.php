@@ -9,7 +9,7 @@ class AccountController extends BaseController {
 	public function postSignIn() {
 		$validator = Validator::make(Input::all(),
 			array(
-				'email' 	=> 'required',
+				'username' 	=> 'required',
 				'password' 	=> 'required'				
 			)
 
@@ -27,7 +27,7 @@ class AccountController extends BaseController {
 			$remember = (Input::has('remember')) ? true : false;
 
 			$auth = Auth::attempt(array(
-				'email' => Input::get('email'),
+				'username' => Input::get('username'),
 				'password' => Input::get('password'),
 				'active' => 1
 			), $remember);
@@ -37,7 +37,7 @@ class AccountController extends BaseController {
 				return Redirect::intended('/');
 			} else {
 				return Redirect::route('account-sign-in')
-				->with('global', 'Email/password wrong, or account not activated.');
+				->with('global', 'username/password wrong, or account not activated.');
 			}
 		}
 

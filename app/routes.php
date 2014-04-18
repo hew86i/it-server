@@ -30,10 +30,10 @@ Route::get('/', array(
 =            Handles bad routing            =
 ===========================================*/
 
-App::missing(function($exception)
-{	
-	return Redirect::route('home')->with('global','Sorry, bad url request...');
-});
+// App::missing(function($exception)
+// {	
+// 	return Redirect::route('home')->with('global','Sorry, bad url request...');
+// });
 
 
 Route::get('/user/{username}', array(
@@ -87,6 +87,35 @@ Route::group(array('before' => 'auth'), function() {
 		'as' => 'account-change-password',
 		'uses' => 'AccountController@getChangePassword'		
 	));
+
+	/*======================================
+	=            Ajax-post test            =
+	======================================*/
+	
+
+	Route::post('/ajax/get-ajax', array(
+		'as' => 'ajax-get-ajax',
+		'uses' => 'AjaxController@getAjaxRequest'
+	));
+
+
+	Route::post('ajax/get-edit-ajax', array(
+		'as' => 'get-edit-ajax',
+		'uses' => 'AjaxController@getEditAjaxRequest'
+	));
+
+
+	/*===========================================
+	=            Form entering route            =
+	===========================================*/	
+	
+
+	Route::post('/form/enter-nalog', array(
+		'as' => 'form-enter-nalog',
+		'uses' => 'HomeController@postVnesiNalog'
+	));
+
+
 
 });
 

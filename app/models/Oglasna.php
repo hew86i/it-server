@@ -14,4 +14,6 @@ class Oglasna extends Eloquent{
 		return $query->where('status', '<>', 9);
 	}
 
+	
+
 }

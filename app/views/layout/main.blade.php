@@ -6,6 +6,11 @@
 	<!-- commnet for git -->
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
 	{{ HTML::style('css/style.css')}}
+	<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	{{ HTML::script('/scripts/main.js')}}
+	{{ HTML::script('/scripts/jquery.cyrillic.js') }}
+
 	<style>
 		/*@import url(//fonts.googleapis.com/css?family=Lato:700);*/
 		body {
@@ -19,7 +24,9 @@
 <body>
 	<div class="container">
 		@if(Session::has('global'))
-			<h3>{{ Session::get('global') }}</h3>
+		 <div class="globalni_poraki">
+			<h3>{{ Session::get('global') }}</h3>			
+		 </div>
 		@endif
 
 		@include('layout.navigation')
@@ -27,8 +34,7 @@
 		@yield('listing')
 	</div>
 
-	<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>	
+		
 </body>
 	
 </html>

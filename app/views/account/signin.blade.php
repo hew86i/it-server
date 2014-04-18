@@ -12,13 +12,13 @@
 					<form class="form-horizontal" action="{{ URL::route('account-sign-in-post') }}" method="post" role="role">
 
 							<div class="form-group">
-								<label for="email" class="col-sm-2 control-label">Email</label>
+								<label for="username" class="col-sm-2 control-label">Username</label>
 								<div class="col-sm-5">
-									<input type="email" class="form-control" id="email" name="email" placeholder="Email"{{ (Input::old('email')) ? ' value="' . e(Input::old('email')) . '"' : '' }} autofocus>
+									<input type="text" class="form-control" id="username" name="username" placeholder="Username"{{ (Input::old('username')) ? ' value="' . e(Input::old('username')) . '"' : '' }}>
 								</div>
-								<label for="email" class="control-label">
-									@if($errors->has('email'))
-										{{ $errors->first('email') }}
+								<label for="username" class="control-label">
+									@if($errors->has('username'))
+										{{ $errors->first('username') }}
 									@endif
 								</label>
 							</div>							
