@@ -43,6 +43,7 @@ class HomeController extends BaseController {
 			if(Session::has('id_post')){
 				$id_post = Session::get('id_post');
 
+				Session::forget('id_post');
 				// edit view
 				
 				$star_nalog = Oglasna::find($id_post);
@@ -54,6 +55,8 @@ class HomeController extends BaseController {
 				$star_nalog->new = 1;
 
 				$star_nalog->save();
+
+
 
 				return Redirect::route('home');
 									
