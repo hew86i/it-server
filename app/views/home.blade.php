@@ -92,10 +92,13 @@
 						});			  
 				  }
 
-			function edit_fn(row_id) {
+			function edit_fn(row_id, username_id, user_modified) {
 
 				  $.post('/it-server/ajax/get-edit-ajax',
-				  		{ id: row_id},
+				  		{ id: row_id,
+				  		  user: username_id,
+				  		  edit_user: user_modified
+				  		},
 				  		function(o){
 				  			$('#naslov').val(o.name);
 							$('#textarea').val(o.description);
@@ -131,25 +134,48 @@
 		<?php
 
 			$allViews = Oglasna::GetActive()
-								->orderby('created_at','desc')
-								->paginate(10);			
+								->orderby('updated_at','desc')
+								->paginate(10);	
+
+			$current_user = Auth::user()->username;
+			$user_group = Auth::user()->user_group;
 			
-			
-			foreach ($allViews as $view) { ?>
+			foreach ($allViews as $view) { 
+
+			$id = $view->id;		
+
+			$full_name = DB::table('views')
+							->join('users', function($join) use($id){
+								$join->on('views.user','=','users.username')
+									 ->where('views.id','=', $id);
+							})
+							->select('users.full_name')							
+							->get();
+							// print_r($full_name);
+							// print_r($full_name[0]->full_name);
+							?>
+
 				<div class="row well row-aktivnosti" style="border: 1px solid black" id='row_{{$view->id }}' >
 					<div class="col-sm-3">
-								<h4>{{ $view->user}}</h4>
-								<h4>{{ $view->created_at }}</h4>								
+								<h4>{{ $full_name[0]->full_name}} </h4>
+								<h4>{{ $view->created_at }}</h4><hr>
+								@if(Session::has('edit_user'))
+									<h4>modified by: {{ Session::get('edit_user') }}</h4>
+									{{ Session::forget('edit_user') }}
+								@endif
+
 					</div> 
 				
 					<div class="col-sm-6" style="border-left:1px solid black">
 						<h2>{{ $view->name }}</h2>							
-						<p>{{$view->description}}<p>					
+						<span>{{ nl2br($view->description) }}<span>					
 					</div>
 
 					<div class="col-sm-2 col-md-offset-1">
-						<button class="btn btn-primary" id="btn{{ $view->id }}" onclick="remove_fn('{{$view->id }}')">Remove</button>
-						<button type="button" class="btn btn-info" onclick="edit_fn('{{$view->id }}')">Edit</button><br/>
+						@if(($current_user == $view->user) || ($user_group == 5))
+							<button class="btn btn-primary" id="btn{{ $view->id }}" onclick="remove_fn('{{$view->id }}')">Remove</button>
+							<button type="button" class="btn btn-info" onclick="edit_fn('{{$view->id }}','{{$view->user}}', '{{$current_user}}')">Edit</button><br/>
+						@endif
 					</div>
 					
 
@@ -165,7 +191,9 @@
 	@stop
 
 	@else
-		<h3>You are not signed in.</h3>
+		<span class="globalni_poraki">
+			<h3>You are not signed in.</h3>
+		</span>
 	@endif
 @stop
 

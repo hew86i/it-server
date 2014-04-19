@@ -31,14 +31,25 @@ class AjaxController extends BaseController
 		if(isset($_POST)){
 
 			$view_id = $_POST['id'];
+			$view_username = $_POST['user'];
+			$edit_user = $_POST['edit_user'];
 
 			// store to session			
 			Session::put('id_post', $view_id);
+			Session::put('username_id', $view_username);
+			Session::put('edit_user', $edit_user);
 
 			$view = Oglasna::find($view_id);
+
+			// za oglasna tabla
+			$view->status = 1;
+
+			$view->save();
+
 			echo json_encode(array('res' => true,
 								 	'name' => $view->name,
-								 	'description' => $view->description
+								 	'description' => $view->description,
+								 	'user' => $view_username
 							));
 
 		} else {

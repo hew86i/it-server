@@ -42,14 +42,19 @@ class HomeController extends BaseController {
 
 			if(Session::has('id_post')){
 				$id_post = Session::get('id_post');
+				$view_username = Session::get('username_id');
+				// $edit_user = Session::get('edit_user');
 
 				Session::forget('id_post');
+				Session::forget('username_id');
+				// Session::forget('edit_user');
 				// edit view
 				
 				$star_nalog = Oglasna::find($id_post);
 
-				$star_nalog->name = Input::get('naslov');
-				$star_nalog->description = Input::get('textarea');
+				$star_nalog->name = e(Input::get('naslov'));
+				$star_nalog->description = e(Input::get('textarea'));
+				$star_nalog->user = $view_username;
 				$star_nalog->rank = 0;
 				$star_nalog->status = 1;
 				$star_nalog->new = 1;
@@ -66,8 +71,8 @@ class HomeController extends BaseController {
 
 				// insert new view
 				// Vnesi nalog
-				$naslov = Input::get('naslov');
-				$opis = Input::get('textarea');			
+				$naslov = e(Input::get('naslov'));
+				$opis = e(Input::get('textarea'));		
 
 				$nalog = Oglasna::create(array(
 					'name' => $naslov, 

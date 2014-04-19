@@ -8,12 +8,12 @@
 <div class="row">
 	<div class="col-sm-10">
 		<fieldset class="create_account">
-				<legend class="legend_create">Create Account</legend>
+				<legend class="legend_create color_text"><h2>Create Account</h2></legend>
 
 					<form class="form-horizontal" action="{{ URL::route('account-create-post') }}" method="post" role="role">
 
 							<div class="form-group">
-								<label for="email" class="col-sm-2 control-label">Email</label>
+								<label for="email" class="col-sm-2 control-label color_text">Email</label>
 								<div class="col-sm-5">
 									<input type="email" class="form-control" id="email" name="email" placeholder="Email"{{ (Input::old('email')) ? ' value="' . e(Input::old('email')) . '"' : '' }} autofocus>
 								</div>
@@ -25,7 +25,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="username" class="col-sm-2 control-label">Username</label>
+								<label for="username" class="col-sm-2 control-label color_text">Username</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" id="username" name="username" placeholder="Username"{{ (Input::old('username')) ? ' value="' . e(Input::old('username')) . '"' : '' }}>
 								</div>
@@ -37,7 +37,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="full_name" class="col-sm-2 control-label">Full Name</label>
+								<label for="full_name" class="col-sm-2 control-label color_text">Full Name</label>
 								<div class="col-sm-5">
 									<input type="text" class="form-control" id="full_name" name="full_name" placeholder="Full Name"{{ (Input::old('full_name')) ? ' value="' . e(Input::old('full_name')) . '"' : '' }}>
 								</div>
@@ -49,7 +49,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="password" class="col-sm-2 control-label">Password</label>
+								<label for="password" class="col-sm-2 control-label color_text">Password</label>
 								<div class="col-sm-5">
 									<input type="password" class="form-control" id="password" name="password" placeholder="Password"{{ (Input::old('password')) ? ' value="' . e(Input::old('password')) . '"' : '' }}>
 								</div>
@@ -61,7 +61,7 @@
 							</div>
 
 							<div class="form-group">
-								<label for="password_again" class="col-sm-2 control-label">Password again</label>
+								<label for="password_again" class="col-sm-2 control-label color_text">Password again</label>
 								<div class="col-sm-5">
 									<input type="password" class="form-control" id="password_again" name="password_again" placeholder="Password"{{ (Input::old('password_again')) ? ' value="' . e(Input::old('password_again')) . '"' : '' }}>
 								</div>
