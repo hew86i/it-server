@@ -1,28 +1,32 @@
 
-// function delete_row(row_id)
-// {
-// 	$.ajax(
-// 	{
-// 		url: "brishi_zapis.php",
-// 		type: 'POST',
-// 		data: { id: row_id },
+function Ticker(){
+	$('#news-container').vTicker({ 
+	speed: 1200,
+	pause: 6800,
+	animation: 'fade',
+	height: 5000,
+	mousePause: false,
+	showItems: 4
+	});
+};
 
-// 	}
-// 			)
-// 	.done(function( msg ) {
-// 		// alert(msg);
-// 	$('#row_'+row_id).remove();
-// 	});
-// }
+// function pad(n) { return ("0" + n).slice(-2); }
+Number.prototype.pad = function (len) {
+    return (new Array(len+1).join("0") + this).slice(-len);
+};
 
-function delete_row(row_id) {
-	$.post('/it-server/public/Home/brishi_zapis.php',
-			{id: row_id},
-			function(o) {
-				console.log(o);
-			}
+function printTime() {
+		var now = new Date();
+			// var hours = now.getHours();
+			// var mins = now.getMinutes();
+			// var seconds = now.getSeconds();
+			// console.log(hours+":"+mins+":"+seconds);
+		var time = now.getHours().pad(2) + ":"
+         + now.getMinutes().pad(2) + ":"
+         + now.getSeconds().pad(2);
+        	// console.log(time);
+         document.getElementById("now_time").textContent = time
+         // $('#now_time').after(time);
+		};
+		
 
-		);
-
-}
-											  

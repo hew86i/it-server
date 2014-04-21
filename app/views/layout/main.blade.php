@@ -25,7 +25,7 @@
 	<div class="container">
 		@if(Session::has('global'))
 		 <div class="globalni_poraki">
-			<h3>{{ Session::get('global') }}</h3>			
+			<h3>{{ print_r(Session::get('global')) }}</h3>			
 		 </div>
 		@endif
 

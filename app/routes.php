@@ -42,6 +42,23 @@ Route::get('/user/{username}', array(
 ));
 
 
+/*============================================
+=            Oglasna tabla router            =
+============================================*/
+
+Route::get('/oglasna', array(
+	'as' => 'oglasna-tabla',
+	'uses' => 'HomeController@oglasna'
+));
+
+Route::get('/oglasna/aktivni', array(
+	'as' => 'oglasna-aktivni',
+	'uses' => 'HomeController@activniOglasna'
+));
+
+
+
+
 /*===========================================
 =            Authenticated group            =
 ===========================================*/

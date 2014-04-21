@@ -3,7 +3,7 @@
 
 class Oglasna extends Eloquent{
 
-	protected $fillable = array('name', 'description', 'user', 'rank', 'status', 'new');
+	protected $fillable = array('name', 'description', 'user', 'rank', 'status', 'new', 'modified_user', 'editable');
 
 	protected $table = 'views';
 

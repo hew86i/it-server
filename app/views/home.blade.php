@@ -50,8 +50,16 @@
 					          внеси налог
 					        </button>
 					      </div>
+					      <div class="col-md-offset-3 col-md-3 ">
+					      	<div class="checkbox">
+					        <label style="color:#333666">
+					          <input type="checkbox" id="can_edit" name="can_edit" > <strong>Others can edit</strong>
+					        </label>
+					      </div>
+					      </div>
 					    </div>
 
+					    
 					    {{Form::token()}}						
 					    
 					  </fieldset>
@@ -66,14 +74,9 @@
 	
 	@section('listing')		
 
-		<div class="row well" style="margin-top 10px">
+		<div class="row well" id="well_naslov">
 			<h1> Внесени налози</h1>
 		</div>
-		<style type="text/css">
-			ul,ol {
-				margin-left: 10px;
-				}
-		</style>
 
 		<script>
 
@@ -92,23 +95,42 @@
 						});			  
 				  }
 
-			function edit_fn(row_id, username_id, user_modified) {
+			function edit_fn(row_id, username_id, user_modified, editable) {
 
-				  $.post('/it-server/ajax/get-edit-ajax',
+				isSameUser = (username_id == user_modified) ? 1 : 0;
+				// console.log(isSameUser); 
+
+				$.post('/it-server/ajax/get-edit-ajax',
 				  		{ id: row_id,
 				  		  user: username_id,
-				  		  edit_user: user_modified
+				  		  edit_user: user_modified,
+				  		  same_user: isSameUser
 				  		},
 				  		function(o){
 				  			$('#naslov').val(o.name);
 							$('#textarea').val(o.description);
+							
 				  			console.log(o);
 				  		},				  		 
 				  		'json'
 				    );
-				  $("html, body").animate({ scrollTop: 0 }, "slow");
 
+				if((editable == 1) && (username_id == user_modified)){
+					console.log('zadovoluva editable i user=modif');
+					$('#can_edit').attr("disabled", false);									
+					$('#can_edit').prop('checked', true);								
+				}else if((editable == 1) && (username_id != user_modified)){
+					console.log('zadovoluva editable a user != modif');
+					$('#can_edit').prop('checked', true);
+					$('#can_edit').attr("disabled", true);
+				}else if((editable == 0) && (username_id == user_modified)) {
+					console.log('editable = 0');
+					$('#can_edit').attr("disabled", false);
 				}
+
+				 $("html, body").animate({ scrollTop: 0 }, "slow");
+
+		}
 
 
 			$(document).ready(function(){
@@ -152,17 +174,26 @@
 							->select('users.full_name')							
 							->get();
 							// print_r($full_name);
-							// print_r($full_name[0]->full_name);
+							// dd($full_name[0]);
+							// 
+							$name = $full_name[0]->full_name;
 							?>
 
 				<div class="row well row-aktivnosti" style="border: 1px solid black" id='row_{{$view->id }}' >
 					<div class="col-sm-3">
-								<h4>{{ $full_name[0]->full_name}} </h4>
+								<h4><strong>{{ $name }}</strong></h4>
 								<h4>{{ $view->created_at }}</h4><hr>
-								@if(Session::has('edit_user'))
-									<h4>modified by: {{ Session::get('edit_user') }}</h4>
+								@if(Session::has('edit_user') || ($view->modified_user != NULL))
+									<!-- <h4>modified by: {{ Session::get('edit_user') }}</h4> -->
+									<span class="modified_span">
+										<h4><i>last edit by: <span>{{ $view->modified_user }}</span>
+												<h5>{{ $view->updated_at }}</h5>
+											</i>
+										</h4>
+									</span>
 									{{ Session::forget('edit_user') }}
 								@endif
+								
 
 					</div> 
 				
@@ -174,7 +205,9 @@
 					<div class="col-sm-2 col-md-offset-1">
 						@if(($current_user == $view->user) || ($user_group == 5))
 							<button class="btn btn-primary" id="btn{{ $view->id }}" onclick="remove_fn('{{$view->id }}')">Remove</button>
-							<button type="button" class="btn btn-info" onclick="edit_fn('{{$view->id }}','{{$view->user}}', '{{$current_user}}')">Edit</button><br/>
+						@endif
+						@if(($current_user == $view->user) || ($user_group == 5) || ($view->editable == 1))
+							<button type="button" class="btn btn-info" onclick="edit_fn('{{$view->id }}','{{$view->user}}', '{{$current_user}}', '{{$view->editable}}')">Edit</button><br/>
 						@endif
 					</div>
 					

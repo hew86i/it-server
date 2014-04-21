@@ -33,6 +33,8 @@ class HomeController extends BaseController {
 
 		);
 
+		$can_edit = (Input::has('can_edit')) ? 1 : 0;
+
 		if($validator->fails()) {
 			// die('Failed.');
 			return Redirect::route('home')
@@ -47,6 +49,7 @@ class HomeController extends BaseController {
 
 				Session::forget('id_post');
 				Session::forget('username_id');
+				Session::forget('edit_user');
 				// Session::forget('edit_user');
 				// edit view
 				
@@ -58,6 +61,13 @@ class HomeController extends BaseController {
 				$star_nalog->rank = 0;
 				$star_nalog->status = 1;
 				$star_nalog->new = 1;
+
+				if(Session::has('same_user')) {
+					$star_nalog->editable = 1;
+				}
+				// $star_nalog->editable = Session::get('same_user');
+
+				Session::forget('same_user');
 
 				$star_nalog->save();
 
@@ -80,7 +90,8 @@ class HomeController extends BaseController {
 					'user' => Auth::user()->username,
 					'rank' => 0,
 					'status' => 1, 
-					'new' => 1
+					'new' => 1,
+					'editable' => $can_edit
 				));
 
 				if($nalog->save()) {				
@@ -94,6 +105,34 @@ class HomeController extends BaseController {
 
 		}
 
+	}
+
+	public function oglasna() {
+
+		$updateOglasna = Oglasna::where('status', '=', 1)->update(array('new' => 1));
+
+		return View::make('oglasna.tv');
+	}
+
+	public function activniOglasna() {
+
+			$aktivni = DB::table('views')
+							->join('users', function($join) {
+								$join->on('views.user','=','users.username')
+									 ->where('views.status','=', 0)
+									 ->where('views.new','=', 1);
+							})
+							// ->select('*')							
+							->get();
+							// print_r($full_name);
+							// print_r($full_name[0]->full_name);							
+
+							// dd($aktivni);
+
+							return Response::json($aktivni);
+
+			// $js = json_encode($view2->results());
+			// $update = DB::getInstance()->query("UPDATE view SET new = 0 WHERE status = 1");			
 	}
 
 

@@ -1,0 +1,27 @@
+
+
+
+
+
+/*after bootstrap and template */
+
+h2 {
+  font-weight: 800;
+  font-size: 36px;
+  text-transform:uppercase;
+}
+
+body {
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 400;
+  overflow:hidden;
+  cursor: none;
+}
+.foo {
+  font-weight: 300;
+  color: #292929;
+}
+
+p {
+	margin: 0 0 0px;
+}

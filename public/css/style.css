@@ -39,3 +39,15 @@ body {
    
 }
 
+.modified_span {
+    
+}
+
+.modified_span > h4 > i > span {
+    color:red;
+}
+
+#well_naslov {
+    margin-top: 20px;
+}
+
