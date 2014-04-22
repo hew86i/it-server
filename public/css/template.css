@@ -2,6 +2,8 @@ ul,ol {
   margin-top: 0;
   margin-bottom: 0;
   padding: 0 0 0 0;
+  width: 100%;
+  /*tuka se menuva sirocinata */
 }
 
 .starter-template {
@@ -13,8 +15,8 @@ ul,ol {
 }
 
 #news-container {
-/*  width: auto; 
-  margin: auto;
+  width: 100%; 
+/*  margin: auto;
   margin-top: 30px;
   border: 5px solid #333333;*/
   margin-left: 10px;
@@ -46,6 +48,7 @@ ul,ol {
   padding: 4px;
   padding-top: 0;
   font-size: 20px;
+  /*width: 100%;*/
 
 }
 
@@ -60,6 +63,7 @@ ul,ol {
   font-size: 26px;
   padding-left: 15px;
   padding-right: 15px;
+  /*width: 100%;*/
 
   
 }
@@ -78,5 +82,9 @@ ul,ol {
 
 .prvred {
   background-color:#AABFFF;
+}
+
+.nalog {
+  width:auto;
 }
 

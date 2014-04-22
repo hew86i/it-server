@@ -25,16 +25,21 @@ setInterval(function(){
     				var status = obj['status'];
     				var user = obj['user'];
     				var date = obj['created'];
+    				var edit_user = obj['edit_user'];
     				       						
             		console.log(naslov + ": " + opis+ ": " + user+ ": " + status+ ": " );
             		
             		//so idnum# obelezuvvat div's
             		// var new_div = "<li id=\"p_idnum"+id_num+"\""+"><div class=\"panel panel-default\" id=\"idnum"+id_num+"\""+"><h2>"+naslov+"</h2><p>"+opis+"</p></div></li>";
 
+            		var insert_edit_user = (edit_user != null) ? (user+" <span id='edited_on_oglasna'><small><i>-- last edit: <strong>"+edit_user+"</strong> --</i></small></span>") : user;
+            		console.log("-[edit or not :" +insert_edit_user+" ]-");
 
-            		var new_div = "<li id=\"p_idnum"+id_num+"\""+"><div class=\"panel panel-default\">"+
+            		var new_div = "<li id=\"p_idnum"+id_num+"\""+"><div class=\"panel panel-default nalog\">"+
             							"<h2><strong>  - "+naslov+" - </strong></h2>"+
-            							"<p>"+opis+"</p><div class='foo' style='float:left;'>"+user+"</div>"+
+            							"<p>"+opis+"</p><div class='foo' style='float:left;'>"+
+            							insert_edit_user+
+            							"</div>"+
             							"<div class='foo' style='float:right;'>"+date+"</div><hr style='clear:both;'/>"+
 
             							"</div></li>";
@@ -59,7 +64,7 @@ setInterval(function(){
 		        		// console.log("id : " + id_brisi + " tab_brisi :" + tag_brisi);
 		    			
 		    			//remove child		    
-
+		    			// $(tag_brisi).fadeOut(1200);
 						$(tag_brisi).remove();
 		    		});
 				});
@@ -95,12 +100,8 @@ setInterval(function(){
 
 				<div id="news-container">
 					<ul>									
-						<!-- <li>
-							<div id="p_idnum1" class="panel panel-default">
-								<h1><strong> Hard coded </strong></h1>
-								<p>intro - default</p>
-							</div>
-						</li> -->	
+						<!-- <li id="p_idnum4"><div class="panel panel-default nalog"><h2><strong>  - Тест Налог 3e - </strong></h2><p>Кирилица налог- нов ред администратор------------</p><div class="foo" style="float:left;">Администратор</div><div class="foo" style="float:right;">2014-04-22 11:40:53</div><hr style="clear:both;"></div>
+						</li> -->
 					</ul>
 			
 				</div>	

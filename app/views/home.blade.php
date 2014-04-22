@@ -22,7 +22,7 @@
 					      </label> -->
 					      
 					      <div class="col-md-10 input-lg">
-					        <input id="naslov" name="naslov" type="text" placeholder="Наслов" class="form-control input-md" required="">
+					        <input id="naslov" name="naslov" type="text" class="form-control input-md" required="" placeholder="Наслов"{{ (Input::old('naslov')) ? ' value="' . e(Input::old('naslov')) . '"' : '' }}>
 					      </div>
 					      <div class="col-sm-2">
       						<p class="form-control-static help-text"></p>
@@ -37,7 +37,7 @@
 					        Опис
 					      </label> -->
 					      <div class="col-md-10">
-					        <textarea class="form-control" id="textarea" name="textarea" placeholder="Опис" rows="10" cols="300"></textarea>
+					        <textarea class="form-control" id="textarea" name="textarea" required="" placeholder="Опис" rows="10" cols="300"{{ (Input::old('textarea')) ? ' value="' . e(Input::old('textarea')) . '"' : '' }}></textarea>
 					      </div>
 					    </div>
 					    
@@ -156,7 +156,7 @@
 		<?php
 
 			$allViews = Oglasna::GetActive()
-								->orderby('updated_at','desc')
+								->orderby('modified_at','desc')
 								->paginate(10);	
 
 			$current_user = Auth::user()->username;
@@ -175,9 +175,12 @@
 							->get();
 							// print_r($full_name);
 							// dd($full_name[0]);
-							// 
-							$name = $full_name[0]->full_name;
-							?>
+							if(isset($full_name[0])){
+								$name = $full_name[0]->full_name;								
+							} else {
+								$name = 'Anonymous';
+							}
+		?>
 
 				<div class="row well row-aktivnosti" style="border: 1px solid black" id='row_{{$view->id }}' >
 					<div class="col-sm-3">

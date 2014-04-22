@@ -36,7 +36,7 @@ class HomeController extends BaseController {
 		$can_edit = (Input::has('can_edit')) ? 1 : 0;
 
 		if($validator->fails()) {
-			// die('Failed.');
+			// dd($validator);
 			return Redirect::route('home')
 					->withErrors($validator);
 					
@@ -55,8 +55,8 @@ class HomeController extends BaseController {
 				
 				$star_nalog = Oglasna::find($id_post);
 
-				$star_nalog->name = e(Input::get('naslov'));
-				$star_nalog->description = e(Input::get('textarea'));
+				$star_nalog->name = Input::get('naslov');
+				$star_nalog->description = Input::get('textarea');
 				$star_nalog->user = $view_username;
 				$star_nalog->rank = 0;
 				$star_nalog->status = 1;
@@ -71,7 +71,11 @@ class HomeController extends BaseController {
 
 				$star_nalog->save();
 
+				// update modified_at;
+				
+				$star_nalog->modified_at = $star_nalog->updated_at;
 
+				$star_nalog->save();
 
 				return Redirect::route('home');
 									
@@ -81,8 +85,8 @@ class HomeController extends BaseController {
 
 				// insert new view
 				// Vnesi nalog
-				$naslov = e(Input::get('naslov'));
-				$opis = e(Input::get('textarea'));		
+				$naslov = Input::get('naslov');
+				$opis = Input::get('textarea');		
 
 				$nalog = Oglasna::create(array(
 					'name' => $naslov, 
@@ -92,14 +96,20 @@ class HomeController extends BaseController {
 					'status' => 1, 
 					'new' => 1,
 					'editable' => $can_edit
+
 				));
 
-				if($nalog->save()) {				
+				if($nalog->save()) {
+
+					// update modified_at;
+				
+					// $nalog->modified_at = $nalog->updated_at;
+					// $nalog->save();				
 
 					return Redirect::route('home');
 									// ->with('global',"session:".$id_post);	
 				}
-			// print_r(Input::all());
+			
 			}
 			
 

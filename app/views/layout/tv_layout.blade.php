@@ -19,25 +19,7 @@
 
    
   	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,300,500,600,700,800,900&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-
-<script type="text/javascript">
-
-// $(document).ready(function(){
-// 	setTimeout(function(){
-// 	$(function(){
-// 		$('#news-container').vTicker({ 
-// 		speed: 1200,
-// 		pause: 6800,
-// 		animation: 'fade',
-// 		height: 5000,
-// 		mousePause: false,
-// 		showItems: 4
-// 		});
-// 	});
-// 	}, 2000);
-// });
-</script>
-
+  	
   </head>
   <body>    
 

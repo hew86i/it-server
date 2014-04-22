@@ -26,7 +26,8 @@ class OglasnaController extends BaseController
 									 'views.name as title',
 								 	 'views.description',
 								 	 'users.full_name as user',
-								 	 'views.updated_at as created')													
+								 	 'views.modified_at as created',
+								 	 'views.modified_user as edit_user')													
 							->get();							
 							// dd($aktivni);
 			$response = Response::json($aktivni);			

@@ -44,7 +44,7 @@ class AjaxController extends BaseController
 			$view = Oglasna::find($view_id);
 
 			// za oglasna tabla
-			$view->status = 1;
+			$view->status = 9;
 			$view->modified_user = $edit_user;
 
 
