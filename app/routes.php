@@ -48,12 +48,17 @@ Route::get('/user/{username}', array(
 
 Route::get('/oglasna', array(
 	'as' => 'oglasna-tabla',
-	'uses' => 'HomeController@oglasna'
+	'uses' => 'OglasnaController@oglasna'
 ));
 
-Route::get('/oglasna/aktivni', array(
+Route::post('/oglasna/aktivni', array(
 	'as' => 'oglasna-aktivni',
-	'uses' => 'HomeController@activniOglasna'
+	'uses' => 'OglasnaController@aktivniOglasna'
+));
+
+Route::post('/oglasna/neaktivni', array(
+	'as' => 'oglasna-neaktivni',
+	'uses' => 'OglasnaController@neaktivniOglasna'
 ));
 
 

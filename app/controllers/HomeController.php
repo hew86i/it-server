@@ -105,35 +105,7 @@ class HomeController extends BaseController {
 
 		}
 
-	}
-
-	public function oglasna() {
-
-		$updateOglasna = Oglasna::where('status', '=', 1)->update(array('new' => 1));
-
-		return View::make('oglasna.tv');
-	}
-
-	public function activniOglasna() {
-
-			$aktivni = DB::table('views')
-							->join('users', function($join) {
-								$join->on('views.user','=','users.username')
-									 ->where('views.status','=', 0)
-									 ->where('views.new','=', 1);
-							})
-							// ->select('*')							
-							->get();
-							// print_r($full_name);
-							// print_r($full_name[0]->full_name);							
-
-							// dd($aktivni);
-
-							return Response::json($aktivni);
-
-			// $js = json_encode($view2->results());
-			// $update = DB::getInstance()->query("UPDATE view SET new = 0 WHERE status = 1");			
-	}
+	}	
 
 
 }

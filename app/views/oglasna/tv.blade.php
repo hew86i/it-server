@@ -13,24 +13,64 @@ setTimeout("Ticker()", 2000);
 
 
 setInterval(function(){
-	$.post('oglasna/aktivni',
+	$.post('/it-server/oglasna/aktivni',
 			{},
 			function(o){
-				  	// 		$('#naslov').val(o.name);
-							// $('#textarea').val(o.description);
-			console.log(o);
+				console.log(o);
+				$.each(o, function(idx, obj){ 
+
+    				var id_num = obj['id'];
+    				var naslov = obj['title'];
+    				var opis = obj['description'];
+    				var status = obj['status'];
+    				var user = obj['user'];
+    				var date = obj['created'];
+    				       						
+            		console.log(naslov + ": " + opis+ ": " + user+ ": " + status+ ": " );
+            		
+            		//so idnum# obelezuvvat div's
+            		// var new_div = "<li id=\"p_idnum"+id_num+"\""+"><div class=\"panel panel-default\" id=\"idnum"+id_num+"\""+"><h2>"+naslov+"</h2><p>"+opis+"</p></div></li>";
+
+
+            		var new_div = "<li id=\"p_idnum"+id_num+"\""+"><div class=\"panel panel-default\">"+
+            							"<h2><strong>  - "+naslov+" - </strong></h2>"+
+            							"<p>"+opis+"</p><div class='foo' style='float:left;'>"+user+"</div>"+
+            							"<div class='foo' style='float:right;'>"+date+"</div><hr style='clear:both;'/>"+
+
+            							"</div></li>";
+            		
+	        		$('#news-container > ul').append(new_div);	        		
+	    		});
 			},				  		 
 			'json'
 		);
-				  // $("html, body").animate({ scrollTop: 0 }, "slow");
 
+	setTimeout(function(){
+				$.post('/it-server/oglasna/neaktivni',
+					{}, 
+					function(data){ 
+	    			$.each(data, function(idx, obj){ 
 
-	},1500);
+	    				var status_brisi = obj['status'];
+	    				var id_brisi = obj['id'];       				
+	       						
+	            		// console.log("id : " + id_brisi);
+		        		var tag_brisi = "#p_idnum"+id_brisi;		        		
+		        		// console.log("id : " + id_brisi + " tab_brisi :" + tag_brisi);
+		    			
+		    			//remove child		    
+
+						$(tag_brisi).remove();
+		    		});
+				});
+			
+			}, 1000);
+
+	},2000);
 
 });
 
 </script>
-
 
 
 <div class="container container-full">
@@ -54,23 +94,13 @@ setInterval(function(){
 			<div class="col-lg-9">
 
 				<div id="news-container">
-					<ul>
-						<li>
+					<ul>									
+						<!-- <li>
 							<div id="p_idnum1" class="panel panel-default">
-								<h1><strong> Опис на проблемот     |    22/4 </strong></h1>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris accumsan, risus rutrum
-						 			fermentum congue, nunc felis posuere erat, nec posuere tortor ipsum id mauris.  malesuada quis dui ut, mo
-						   			llis imperdiet nisi.</p>
+								<h1><strong> Hard coded </strong></h1>
+								<p>intro - default</p>
 							</div>
-						</li>				
-						<li>
-							<div id="p_idnum1" class="panel panel-default">
-								<h1><strong> Опис на      |    22/4 </strong></h1>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris accumsan, risus rutrum
-						 			fermre tortor ipsum id mauris.  malesuada quis dui ut, mo
-						   			llis imperdiet nisi.</p>
-							</div>
-						</li>	
+						</li> -->	
 					</ul>
 			
 				</div>	

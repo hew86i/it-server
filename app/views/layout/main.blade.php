@@ -10,6 +10,8 @@
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	{{ HTML::script('/scripts/main.js')}}
 	{{ HTML::script('/scripts/jquery.cyrillic.js') }}
+	
+	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
 	<style>
 		/*@import url(//fonts.googleapis.com/css?family=Lato:700);*/
@@ -25,7 +27,7 @@
 	<div class="container">
 		@if(Session::has('global'))
 		 <div class="globalni_poraki">
-			<h3>{{ print_r(Session::get('global')) }}</h3>			
+			<h3>{{ Session::get('global') }}</h3>			
 		 </div>
 		@endif
 
