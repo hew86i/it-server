@@ -48,6 +48,7 @@ class AccountController extends BaseController {
 
 
 	public function getSignOut() {
+		Auth::user()->timestamps = false;
 		Auth::logout();
 		return Redirect::route('home');
 	}

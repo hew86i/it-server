@@ -34,8 +34,10 @@ class AjaxController extends BaseController
 			$view_username = $_POST['user'];
 			$edit_user = $_POST['edit_user'];
 			$same_user = $_POST['same_user'];
+			$editable = $_POST['editable'];
 
-			// store to session			
+			// store to session	
+			Session::put('edit_mode', 'true');		
 			Session::put('id_post', $view_id);
 			Session::put('username_id', $view_username);
 			Session::put('edit_user', $edit_user);
@@ -43,18 +45,20 @@ class AjaxController extends BaseController
 
 			$view = Oglasna::find($view_id);
 
+			$view->timestamps = false;
 			// za oglasna tabla
 			$view->status = 9;
+			$view->editable = $editable;
 			$view->modified_user = $edit_user;
 
 
-			$view->save();
-
-			echo json_encode(array('res' => true,
+			if($view->save()){
+				echo json_encode(array('res' => true,
 								 	'name' => $view->name,
 								 	'description' => $view->description,
 								 	'user' => $view_username
 							));
+			};			
 
 		} else {
 			echo json_encode(array('res' => false));

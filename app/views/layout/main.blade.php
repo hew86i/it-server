@@ -4,10 +4,13 @@
 	<meta charset="UTF-8">
 	<title>Auth SYSTEM</title>
 	<!-- commnet for git -->
-	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> -->
+	{{ HTML::style('css/bootstrap.min.css') }}
 	{{ HTML::style('css/style.css')}}
 	<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+	{{ HTML::script('/scripts/jquery-2.0.2.min.js')}}	
+	{{ HTML::script('/scripts/bootstrap.min.js')}}
 	{{ HTML::script('/scripts/main.js')}}
 	{{ HTML::script('/scripts/jquery.cyrillic.js') }}
 	

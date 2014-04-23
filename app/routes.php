@@ -15,6 +15,12 @@
 // {
 // 	return View::make('hello');
 // });
+// 
+
+// Event::listen('illuminate.query', function($sql){
+
+// 	Session::put('query', $sql);	
+// });
 
 
 /*======================================

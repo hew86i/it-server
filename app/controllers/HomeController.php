@@ -38,11 +38,12 @@ class HomeController extends BaseController {
 		if($validator->fails()) {
 			// dd($validator);
 			return Redirect::route('home')
-					->withErrors($validator);
+					->withErrors($validator)
+					->withInput();
 					
 		} else {
 
-			if(Session::has('id_post')){
+			if(Session::has('edit_mode') && Session::get('edit_mode') == 'true'){
 				$id_post = Session::get('id_post');
 				$view_username = Session::get('username_id');
 				// $edit_user = Session::get('edit_user');
@@ -50,7 +51,8 @@ class HomeController extends BaseController {
 				Session::forget('id_post');
 				Session::forget('username_id');
 				Session::forget('edit_user');
-				// Session::forget('edit_user');
+				
+				Session::put('edit_mode', 'false');
 				// edit view
 				
 				$star_nalog = Oglasna::find($id_post);
@@ -69,12 +71,13 @@ class HomeController extends BaseController {
 
 				Session::forget('same_user');
 
+
 				$star_nalog->save();
 
 				// update modified_at;
 				
 				$star_nalog->modified_at = $star_nalog->updated_at;
-
+				$star_nalog->timestamps = false;
 				$star_nalog->save();
 
 				return Redirect::route('home');

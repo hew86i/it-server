@@ -14,7 +14,7 @@ class Oglasna extends Eloquent{
 		return $query->where('status', '<>', 9);
 	}
 
-	public function getUser(){
+	public function owner(){
 
 		return $this->belongsTo('User');
 	}

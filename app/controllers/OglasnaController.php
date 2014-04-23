@@ -32,7 +32,9 @@ class OglasnaController extends BaseController
 							// dd($aktivni);
 			$response = Response::json($aktivni);			
 
-			$update = Oglasna::where('status', '=', 1)->update(array('new' => 0));
+			$update = Oglasna::where('status', '=', 1);
+			$update->timestamps = false;
+			$update->update(array('new' => 0));
 
 		return $response;	
 	}

@@ -3,7 +3,6 @@
 @section('content')
 	@if(Auth::check())
 		<h3><span class="globalni_poraki">Hello, {{ Auth::user()->username }}.</span></h3>
-		
 		<div class="row">
 		<div class="col-md-8" id="test1" style="background-color:#97CBFF; margin-bottom:10px">		
 
@@ -21,14 +20,18 @@
 					        Наслов
 					      </label> -->
 					      
-					      <div class="col-md-10 input-lg">
-					        <input id="naslov" name="naslov" type="text" class="form-control input-md" required="" placeholder="Наслов"{{ (Input::old('naslov')) ? ' value="' . e(Input::old('naslov')) . '"' : '' }}>
+					      <div class="col-xs-10 input-lg">
+					        <input id="naslov" name="naslov" type="text" class="form-control input-md" placeholder="Наслов"{{ (Input::old('naslov')) ? ' value="' . e(Input::old('naslov')) . '"' : '' }}>
 					      </div>
-					      <div class="col-sm-2">
+					      <div class="col-xs-2">
       						<p class="form-control-static help-text"></p>
     					  </div>
+    					  <label for="naslov" class="control-label col-xs-4">
+									@if($errors->has('naslov'))
+										{{ $errors->first('naslov') }}
+									@endif
+						  </label>
 
-					      
 					    </div>
 					    
 					    <!-- Textarea -->
@@ -36,21 +39,28 @@
 					      <!-- <label class="col-md-2 control-label" for="textarea">
 					        Опис
 					      </label> -->
-					      <div class="col-md-10">
-					        <textarea class="form-control" id="textarea" name="textarea" required="" placeholder="Опис" rows="10" cols="300"{{ (Input::old('textarea')) ? ' value="' . e(Input::old('textarea')) . '"' : '' }}></textarea>
+					      <div class="col-xs-10">
+					        <textarea class="form-control" id="textarea" name="textarea" placeholder="Опис" rows="10" cols="300"{{ (Input::old('textarea')) ? ' value="' . e(Input::old('textarea')) . '"' : '' }}></textarea>
 					      </div>
+					      <label for="textarea" class="control-label col-xs-4">
+									@if($errors->has('textarea'))
+										{{ $errors->first('textarea') }}
+									@endif
+						  </label>
+
 					    </div>
 					    
 					    <!-- Button -->
 					    <div class="form-group">
 					      <!-- <label class="col-md-2 control-label" for="prati">
 					      </label> -->
-					      <div class="col-md-4">
+					      <div class="col-xs-2">
 					        <button id="prati" name="prati" class="btn btn-primary">
 					          внеси налог
 					        </button>
 					      </div>
-					      <div class="col-md-offset-3 col-md-3 ">
+					      
+					      <div class="col-xs-offset-3 col-xs-3 ">
 					      	<div class="checkbox">
 					        <label style="color:#333666">
 					          <input type="checkbox" id="can_edit" name="can_edit" > <strong>Others can edit</strong>
@@ -98,13 +108,14 @@
 			function edit_fn(row_id, username_id, user_modified, editable) {
 
 				isSameUser = (username_id == user_modified) ? 1 : 0;
-				// console.log(isSameUser); 
+				console.log(isSameUser); 
 
 				$.post('/it-server/ajax/get-edit-ajax',
 				  		{ id: row_id,
 				  		  user: username_id,
 				  		  edit_user: user_modified,
-				  		  same_user: isSameUser
+				  		  same_user: isSameUser,
+				  		  editable: editable
 				  		},
 				  		function(o){
 				  			$('#naslov').val(o.name);
@@ -127,13 +138,15 @@
 					console.log('editable = 0');
 					$('#can_edit').attr("disabled", false);
 				}
-
-				 $("html, body").animate({ scrollTop: 0 }, "slow");
+				// $('#cancel').show();
+				$("html, body").animate({ scrollTop: 0 }, "slow");
 
 		}
 
 
 			$(document).ready(function(){
+
+				// $('#cancel').hide();
 
 				$('#naslov').keyup(function(e) {
 					
