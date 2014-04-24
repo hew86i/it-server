@@ -121,15 +121,15 @@ Route::group(array('before' => 'auth'), function() {
 	======================================*/
 	
 
-	Route::post('/ajax/get-ajax', array(
-		'as' => 'ajax-get-ajax',
-		'uses' => 'AjaxController@getAjaxRequest'
+	Route::post('/ajax/remove-view', array(
+		'as' => 'ajax-remove-view',
+		'uses' => 'AjaxController@AjaxViewRemove'
 	));
 
 
-	Route::post('ajax/get-edit-ajax', array(
-		'as' => 'get-edit-ajax',
-		'uses' => 'AjaxController@getEditAjaxRequest'
+	Route::post('ajax/edit-view', array(
+		'as' => 'ajax-edit-view',
+		'uses' => 'AjaxController@AjaxViewEdit'
 	));
 
 
@@ -242,9 +242,3 @@ Route::group(array('before' => 'guest'), function() {
 
 
 /*-----  End of Unauthenticated gorup  ------*/
-
-
-
-
-
-

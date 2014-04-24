@@ -33,7 +33,7 @@ class HomeController extends BaseController {
 
 		);
 
-		$can_edit = (Input::has('can_edit')) ? 1 : 0;
+		$has_can_edit = (Input::has('can_edit')) ? 1 : 0;
 
 		if($validator->fails()) {
 			// dd($validator);
@@ -43,7 +43,10 @@ class HomeController extends BaseController {
 					
 		} else {
 
-			if(Session::has('edit_mode') && Session::get('edit_mode') == 'true'){
+			if(Session::has('edit_mode') && Session::get('edit_mode') == true){
+
+				Session::put('edit_mode', false);
+
 				$id_post = Session::get('id_post');
 				$view_username = Session::get('username_id');
 				// $edit_user = Session::get('edit_user');
@@ -52,7 +55,7 @@ class HomeController extends BaseController {
 				Session::forget('username_id');
 				Session::forget('edit_user');
 				
-				Session::put('edit_mode', 'false');
+				Session::put('edit_mode', false);
 				// edit view
 				
 				$star_nalog = Oglasna::find($id_post);
@@ -63,26 +66,18 @@ class HomeController extends BaseController {
 				$star_nalog->rank = 0;
 				$star_nalog->status = 1;
 				$star_nalog->new = 1;
+				$star_nalog->modified_at = date('Y-m-d H:i:s');
 
-				if(Session::has('same_user')) {
+				if($has_can_edit) {
 					$star_nalog->editable = 1;
 				}
-				// $star_nalog->editable = Session::get('same_user');
 
 				Session::forget('same_user');
 
 
 				$star_nalog->save();
 
-				// update modified_at;
-				
-				$star_nalog->modified_at = $star_nalog->updated_at;
-				$star_nalog->timestamps = false;
-				$star_nalog->save();
-
 				return Redirect::route('home');
-									
-
 
 			} else {
 
@@ -98,17 +93,13 @@ class HomeController extends BaseController {
 					'rank' => 0,
 					'status' => 1, 
 					'new' => 1,
-					'editable' => $can_edit
+					'editable' => $has_can_edit
 
 				));
+				$nalog->modified_at = date('Y-m-d H:i:s');
 
 				if($nalog->save()) {
-
-					// update modified_at;
-				
-					// $nalog->modified_at = $nalog->updated_at;
-					// $nalog->save();				
-
+					
 					return Redirect::route('home');
 									// ->with('global',"session:".$id_post);	
 				}

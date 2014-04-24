@@ -93,7 +93,7 @@
 			function remove_fn(row_id){				
 				$.ajax(
 				  	{
-				  		url: '/it-server/ajax/get-ajax',
+				  		url: '/it-server/ajax/remove-view',
 				  		type: 'POST',
 				  		data: { id: row_id},			  		
 
@@ -108,45 +108,40 @@
 			function edit_fn(row_id, username_id, user_modified, editable) {
 
 				isSameUser = (username_id == user_modified) ? 1 : 0;
-				console.log(isSameUser); 
+				console.log("checked : " + $('#can_edit').prop('checked'));
+				console.log(isSameUser);
+				var isChecked = $('#can_edit').prop('checked'); 
 
-				$.post('/it-server/ajax/get-edit-ajax',
+				$.post('/it-server/ajax/edit-view',
 				  		{ id: row_id,
 				  		  user: username_id,
 				  		  edit_user: user_modified,
 				  		  same_user: isSameUser,
-				  		  editable: editable
+				  		  editable: editable,
+				  		  checked: isChecked
 				  		},
 				  		function(o){
 				  			$('#naslov').val(o.name);
 							$('#textarea').val(o.description);
 							
 				  			console.log(o);
+				  			
 				  		},				  		 
 				  		'json'
 				    );
 
-				if((editable == 1) && (username_id == user_modified)){
-					console.log('zadovoluva editable i user=modif');
-					$('#can_edit').attr("disabled", false);									
-					$('#can_edit').prop('checked', true);								
-				}else if((editable == 1) && (username_id != user_modified)){
-					console.log('zadovoluva editable a user != modif');
-					$('#can_edit').prop('checked', true);
-					$('#can_edit').attr("disabled", true);
-				}else if((editable == 0) && (username_id == user_modified)) {
-					console.log('editable = 0');
+				if(isSameUser) {
 					$('#can_edit').attr("disabled", false);
+				} else {
+					$('#can_edit').attr("disabled", true);
 				}
-				// $('#cancel').show();
+			
 				$("html, body").animate({ scrollTop: 0 }, "slow");
 
 		}
 
 
-			$(document).ready(function(){
-
-				// $('#cancel').hide();
+			$(document).ready(function(){				
 
 				$('#naslov').keyup(function(e) {
 					
@@ -158,9 +153,7 @@
    					};
    					
 					console.log(username);
-				});	
-
-				
+				});				
 
 			});
 		

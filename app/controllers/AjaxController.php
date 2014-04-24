@@ -9,7 +9,7 @@
 class AjaxController extends BaseController
 {
 	
-	public function getAjaxRequest(){
+	public function AjaxViewRemove(){
 
 		if(isset($_POST)) {
 
@@ -26,7 +26,7 @@ class AjaxController extends BaseController
 		}
 	}
 
-	public function getEditAjaxRequest() {
+	public function AjaxViewEdit() {
 
 		if(isset($_POST)){
 
@@ -35,28 +35,37 @@ class AjaxController extends BaseController
 			$edit_user = $_POST['edit_user'];
 			$same_user = $_POST['same_user'];
 			$editable = $_POST['editable'];
+			$isChecked = $_POST['checked'];
 
 			// store to session	
-			Session::put('edit_mode', 'true');		
+			Session::put('edit_mode', true);		
 			Session::put('id_post', $view_id);
 			Session::put('username_id', $view_username);
 			Session::put('edit_user', $edit_user);
 			Session::put('same_user', $same_user);
+			Session::put('isChecked', $isChecked);
 
 			$view = Oglasna::find($view_id);
 
-			$view->timestamps = false;
 			// za oglasna tabla
 			$view->status = 9;
+
+			$prev_editable = $view->editable;
 			$view->editable = $editable;
+
+			$prev_mod_user = $view->modified_user;
 			$view->modified_user = $edit_user;
 
 
 			if($view->save()){
 				echo json_encode(array('res' => true,
+									'session_data' => Session::all(),
+									'view_obj' => $view,
 								 	'name' => $view->name,
 								 	'description' => $view->description,
-								 	'user' => $view_username
+								 	'user' => $view_username,
+								 	'prev_mod_user' => $prev_mod_user,
+								 	'prev_editable' => $prev_editable
 							));
 			};			
 
@@ -68,5 +77,3 @@ class AjaxController extends BaseController
 
 	
 }
-
- ?>
