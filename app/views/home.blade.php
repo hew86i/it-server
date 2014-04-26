@@ -4,7 +4,7 @@
 	@if(Auth::check())
 		<h3><span class="globalni_poraki">Hello, {{ Auth::user()->username }}.</span></h3>
 		<div class="row">
-		<div class="col-md-8" id="test1" style="background-color:#97CBFF; margin-bottom:10px">		
+		<div class="col-md-8 col-md-height" id="test1" style="background-color:#97CBFF; margin-bottom:10px">		
 
 
 				<form id="vnesi-form" class="form-horizontal" action="{{ URL::route('form-enter-nalog') }}" method="post" style="width:100%">
@@ -59,6 +59,12 @@
 					          внеси налог
 					        </button>
 					      </div>
+
+					      <div class="col-xs-2">
+					        <button id="cancel" name="cancel" class="btn btn-info" style="display: none;">
+					          Cancel
+					        </button>
+					      </div>
 					      
 					      <div class="col-xs-offset-3 col-xs-3 ">
 					      	<div class="checkbox">
@@ -76,14 +82,16 @@
 				</form>
 		</div>
 
-		<div class="col-md-4">
-			
+		<div class="left-panel col-md-4 col-md-height globalni_poraki">
+			<h3>Panel</h3><hr>
+
 		</div>
 	
 	</div> <!-- row za vnesi forma -->
 	
 	@section('listing')		
-
+	
+	<div id="lista_nalozi">
 		<div class="row well" id="well_naslov">
 			<h1> Внесени налози</h1>
 		</div>
@@ -143,6 +151,7 @@
 
 			$(document).ready(function(){				
 
+
 				$('#naslov').keyup(function(e) {
 					
    					var username = $(this).val();  					                   
@@ -153,6 +162,13 @@
    					};
    					
 					console.log(username);
+				});
+
+				$('#lista_nalozi').on('click', '.btn_edit', function(){
+
+					console.log('EDIT BTN pressed...');
+					$('#cancel').css('display', 'inline-block');
+
 				});				
 
 			});
@@ -188,7 +204,7 @@
 							}
 		?>
 
-				<div class="row well row-aktivnosti" style="border: 1px solid black" id='row_{{$view->id }}' >
+				<div class="row well row-aktivnosti" id='row_{{$view->id }}' >
 					<div class="col-sm-3">
 								<h4><strong>{{ $name }}</strong></h4>
 								<h4>{{ $view->created_at }}</h4><hr>
@@ -216,12 +232,13 @@
 							<button class="btn btn-primary" id="btn{{ $view->id }}" onclick="remove_fn('{{$view->id }}')">Remove</button>
 						@endif
 						@if(($current_user == $view->user) || ($user_group == 5) || ($view->editable == 1))
-							<button type="button" class="btn btn-info" onclick="edit_fn('{{$view->id }}','{{$view->user}}', '{{$current_user}}', '{{$view->editable}}')">Edit</button><br/>
+							<button type="button" class="btn btn-info btn_edit" onclick="edit_fn('{{$view->id }}','{{$view->user}}', '{{$current_user}}', '{{$view->editable}}')">Edit</button><br/>
 						@endif
 					</div>
 					
 
 				</div>
+
 
 				
 			<?php } 
@@ -230,6 +247,7 @@
 			echo '<div style="text-align:center">'.$allViews->links().'</div>';
 		 ?>
 
+		 </div>
 	@stop
 
 	@else

@@ -6,8 +6,7 @@
 	<!-- commnet for git -->
 	<!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> -->
 	{{ HTML::style('css/bootstrap.min.css') }}
-	{{ HTML::style('css/style.css')}}
-	<script src="http://code.jquery.com/jquery-2.0.2.min.js"></script>
+	{{ HTML::style('css/style.css')}}	
 
 	{{ HTML::script('/scripts/jquery-2.0.2.min.js')}}	
 	{{ HTML::script('/scripts/bootstrap.min.js')}}

@@ -52,9 +52,11 @@ class AjaxController extends BaseController
 
 			$prev_editable = $view->editable;
 			$view->editable = $editable;
+			Session::put('prev_editable', $prev_editable);
 
 			$prev_mod_user = $view->modified_user;
 			$view->modified_user = $edit_user;
+			Session::put('prev_mod_user', $prev_mod_user);
 
 
 			if($view->save()){
@@ -75,5 +77,6 @@ class AjaxController extends BaseController
 
 	}
 
+	
 	
 }

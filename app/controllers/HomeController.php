@@ -35,6 +35,7 @@ class HomeController extends BaseController {
 
 		$has_can_edit = (Input::has('can_edit')) ? 1 : 0;
 
+
 		if($validator->fails()) {
 			// dd($validator);
 			return Redirect::route('home')
@@ -44,6 +45,7 @@ class HomeController extends BaseController {
 		} else {
 
 			if(Session::has('edit_mode') && Session::get('edit_mode') == true){
+
 
 				Session::put('edit_mode', false);
 
@@ -57,22 +59,40 @@ class HomeController extends BaseController {
 				
 				Session::put('edit_mode', false);
 				// edit view
-				
 				$star_nalog = Oglasna::find($id_post);
+				
+				// ako e stisnato cancel			
+				if(isset($_POST['cancel'])) {
+					// dd($_POST);
+					
+					$star_nalog->status = 1;
+					$star_nalog->new = 1;
 
-				$star_nalog->name = Input::get('naslov');
-				$star_nalog->description = Input::get('textarea');
-				$star_nalog->user = $view_username;
-				$star_nalog->rank = 0;
-				$star_nalog->status = 1;
-				$star_nalog->new = 1;
-				$star_nalog->modified_at = date('Y-m-d H:i:s');
+					$star_nalog->modified_user = Session::get('prev_mod_user');
+					$star_nalog->editable = Session::get('editable');
 
-				if($has_can_edit) {
-					$star_nalog->editable = 1;
+					$star_nalog->save();
+					
+					Session::forget('prev_mod_user');
+					Session::forget('editable');
+
+					return Redirect::route('home');
 				}
 
-				Session::forget('same_user');
+
+					$star_nalog->name = Input::get('naslov');
+					$star_nalog->description = Input::get('textarea');
+					$star_nalog->user = $view_username;
+					$star_nalog->rank = 0;
+					$star_nalog->status = 1;
+					$star_nalog->new = 1;
+					$star_nalog->modified_at = date('Y-m-d H:i:s');
+
+					if($has_can_edit) {
+						$star_nalog->editable = 1;
+					}
+
+					Session::forget('same_user');
 
 
 				$star_nalog->save();

@@ -22,7 +22,7 @@ legend.legend_create {
     border: 2px solid #cccccc;
     padding: 20px;
     background: #e1e1e1;
-    border-radius: 6px;
+    border-radius: 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -35,16 +35,15 @@ body {
 }
 
 .globalni_poraki, .color_text {
-    color:white;
-   
+    color:white;   
 }
 
 .modified_span {
     
 }
 
-.modified_span > h4 > i > span {
-    color:red;
+.modified_span > h4 > i > span 
+{    color:red;
 }
 
 #well_naslov {
@@ -57,3 +56,78 @@ body {
     height: 50px;
 }
 
+.left-panel {
+
+    background: #97CBFF;    
+    height: inherit;
+    border-left: 1px solid white;  
+}
+
+/* vertical alignment styles */
+.col-top {
+    vertical-align:top;
+}
+.col-middle {
+    vertical-align:middle;
+}
+.col-bottom {
+    vertical-align:bottom;
+}
+
+/* columns of same height styles 
+   example col-md-height     */
+
+.container-xs-height {
+    display:table;
+    padding-left:0px;
+    padding-right:0px;
+}
+.row-xs-height {
+    display:table-row;
+}
+.col-xs-height {
+    display:table-cell;
+    float:none;
+}
+@media (min-width: 768px) {
+    .container-sm-height {
+        display:table;
+        padding-left:0px;
+        padding-right:0px;
+    }
+    .row-sm-height {
+        display:table-row;
+    }
+    .col-sm-height {
+        display:table-cell;
+        float:none;
+    }
+}
+@media (min-width: 992px) {
+    .container-md-height {
+        display:table;
+        padding-left:0px;
+        padding-right:0px;
+    }
+    .row-md-height {
+        display:table-row;
+    }
+    .col-md-height {
+        display:table-cell;
+        float:none;
+    }
+}
+@media (min-width: 1200px) {
+    .container-lg-height {
+        display:table;
+        padding-left:0px;
+        padding-right:0px;
+    }
+    .row-lg-height {
+        display:table-row;
+    }
+    .col-lg-height {
+        display:table-cell;
+        float:none;
+    }
+}
