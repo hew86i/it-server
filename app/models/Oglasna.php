@@ -7,6 +7,8 @@ class Oglasna extends Eloquent{
 
 	protected $table = 'views';
 
+	private $record_count;
+
 	// get only the active activities	
 
 	public function scopeGetActive($query) {

@@ -98,6 +98,30 @@
 
 		<script>
 
+
+			$(function(){
+			    $.extend({
+			        getValues: function(url, logic) {
+			            var result = null;
+			            $.ajax({
+			                url: url,
+			                type: 'post',
+			                data: {remove_btn: logic},
+			                dataType: 'json',
+			                async: false,
+			                success: function(data) {
+			                    // console.info(data);
+			                    result = data;
+			                }
+			            });
+			            return result;
+			        }
+			    });
+			    
+			 
+			});
+
+			
 			function remove_fn(row_id){				
 				$.ajax(
 				  	{
@@ -110,7 +134,8 @@
 				  	.done(function( msg ) {
 				  		// alert(msg);
 						$('#row_'+row_id).remove();
-						});			  
+						});
+						location.remove(true);		  
 				  }
 
 			function edit_fn(row_id, username_id, user_modified, editable) {
@@ -160,7 +185,13 @@
 		}
 
 
-			$(document).ready(function(){				
+			$(document).ready(function(){	
+
+				var flag = 0;
+
+				var recound_counter = $.getValues("/it-server/oglasna/counter", true).record_count;
+			    console.info(recound_counter);
+
 
 				$('#can_edit').prop('checked' , false);
 				$('#naslov').keyup(function(e) {
@@ -180,7 +211,40 @@
 					console.log('EDIT BTN pressed...');
 					$('#cancel').css('display', 'inline-block');
 
-				});				
+				});	
+
+				setInterval(function(){
+
+					$('.btn_remove').click(function(){
+						flag = 1;												
+					});					
+
+					// news = $.getValues("/it-server/oglasna/counter", flag);
+					// // console.log('the flag is : ' + flag);
+					// // // flag = false;
+					// // // 
+					// if(flag == true) {
+					// 	console.log('Flags : '+ flag);
+					// 	location.reload();
+					// 	// alert("izmena od remove btn");
+					// }
+					// console.log(news.record_count+' -flag:'+news.logic);
+
+					if($.getValues("/it-server/oglasna/counter", flag).logic == 1) {
+						flag = 0;
+						// alert('afsdf asdf asdf asd');
+						location.reload(true);
+					};
+
+					if(recound_counter < $.getValues("/it-server/oglasna/counter", flag).record_count){
+						// console.log('new record !!');
+						// flag = false;
+						location.reload(true);
+					};
+					
+					
+					
+				},2000);			
 
 			});
 		
@@ -240,7 +304,7 @@
 
 					<div class="col-sm-2 col-md-offset-1">
 						@if(($current_user == $view->user) || ($user_group == 5))
-							<button class="btn btn-primary" id="btn{{ $view->id }}" onclick="remove_fn('{{$view->id }}')">Remove</button>
+							<button class="btn btn-primary btn_remove" id="btn{{ $view->id }}" onclick="remove_fn('{{$view->id }}')">Remove</button>
 						@endif
 						@if(($current_user == $view->user) || ($user_group == 5) || ($view->editable == 1))
 							<button type="button" class="btn btn-info btn_edit" onclick="edit_fn('{{$view->id }}','{{$view->user}}', '{{$current_user}}', '{{$view->editable}}')">Edit</button><br/>

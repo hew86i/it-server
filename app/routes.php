@@ -68,6 +68,12 @@ Route::post('/oglasna/neaktivni', array(
 ));
 
 
+Route::post('/oglasna/counter', array(
+	'as' => 'oglasna-counter',
+	'uses' => 'OglasnaController@counter'
+));
+
+
 
 
 /*===========================================

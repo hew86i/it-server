@@ -48,5 +48,19 @@ class OglasnaController extends BaseController
 
 		return Response::json($neaktivni);
 	}
+
+
+	public function counter() {
+
+		$record_count = Oglasna::all()->count();
+
+		$logic = $_POST['remove_btn'];
+
+		return Response::json(array(
+				'record_count' => $record_count,
+				'logic' => $logic
+			));
+
+	}
 }
 
