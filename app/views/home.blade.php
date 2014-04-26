@@ -69,7 +69,7 @@
 					      <div class="col-xs-offset-3 col-xs-3 ">
 					      	<div class="checkbox">
 					        <label style="color:#333666">
-					          <input type="checkbox" id="can_edit" name="can_edit" > <strong>Others can edit</strong>
+					          <input type="checkbox" id="can_edit" name="can_edit"> <strong>Others can edit</strong>
 					        </label>
 					      </div>
 					      </div>
@@ -116,9 +116,9 @@
 			function edit_fn(row_id, username_id, user_modified, editable) {
 
 				isSameUser = (username_id == user_modified) ? 1 : 0;
-				console.log("checked : " + $('#can_edit').prop('checked'));
+				// console.log("checked : " + $('#can_edit').prop('checked'));
 				console.log(isSameUser);
-				var isChecked = $('#can_edit').prop('checked'); 
+				var isChecked = null; 
 
 				$.post('/it-server/ajax/edit-view',
 				  		{ id: row_id,
@@ -131,18 +131,29 @@
 				  		function(o){
 				  			$('#naslov').val(o.name);
 							$('#textarea').val(o.description);
-							
+							isChecked = (o.prev_editable == 1) ? true : false;
+
+							if(isSameUser) {
+								console.log('same user - after post');
+								if(isChecked == true){
+									console.log('is checked');
+									$('#can_edit').prop('checked', true);
+								}else if(isChecked == false){
+									console.log('not checked');
+									$('#can_edit').prop('checked', false);
+								}
+								
+								$('#can_edit').attr("disabled", false);					
+							} else {
+								$('#can_edit').attr("disabled", true);
+							}
+
 				  			console.log(o);
+				  			console.log("---- isCecheked: " + isChecked);
 				  			
 				  		},				  		 
 				  		'json'
-				    );
-
-				if(isSameUser) {
-					$('#can_edit').attr("disabled", false);
-				} else {
-					$('#can_edit').attr("disabled", true);
-				}
+				    );				
 			
 				$("html, body").animate({ scrollTop: 0 }, "slow");
 
@@ -151,7 +162,7 @@
 
 			$(document).ready(function(){				
 
-
+				$('#can_edit').prop('checked' , false);
 				$('#naslov').keyup(function(e) {
 					
    					var username = $(this).val();  					                   

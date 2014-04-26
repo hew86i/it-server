@@ -45,7 +45,7 @@ class HomeController extends BaseController {
 		} else {
 
 			if(Session::has('edit_mode') && Session::get('edit_mode') == true){
-
+				// dd($_POST);
 
 				Session::put('edit_mode', false);
 
@@ -69,7 +69,7 @@ class HomeController extends BaseController {
 					$star_nalog->new = 1;
 
 					$star_nalog->modified_user = Session::get('prev_mod_user');
-					$star_nalog->editable = Session::get('editable');
+					$star_nalog->editable = Session::get('prev_editable');
 
 					$star_nalog->save();
 					
@@ -77,7 +77,7 @@ class HomeController extends BaseController {
 					Session::forget('editable');
 
 					return Redirect::route('home');
-				}
+				} else {
 
 
 					$star_nalog->name = Input::get('naslov');
@@ -88,16 +88,19 @@ class HomeController extends BaseController {
 					$star_nalog->new = 1;
 					$star_nalog->modified_at = date('Y-m-d H:i:s');
 
-					if($has_can_edit) {
-						$star_nalog->editable = 1;
-					}
+					if(isset($_POST['can_edit']) && $_POST['can_edit'] == "on") {
+						$star_nalog->editable = 1;						
+					} else if (Session::get('same_user') == 1){
+						$star_nalog->editable = 0;
+						
+					}			
 
 					Session::forget('same_user');
 
 
-				$star_nalog->save();
+				$star_nalog->save(); }
 
-				return Redirect::route('home');
+				return Redirect::route('home'); 
 
 			} else {
 
